@@ -57,6 +57,8 @@ def select_output_directory():
 def process_pdf():
     # Main processing function for PDF file
     global selected_pdf, selected_output_directory
+    root.config(cursor="watch")
+    root.update()
     if not selected_pdf or not selected_output_directory:
         messagebox.showwarning("Aviso", "Por favor, selecione o arquivo PDF e o diretório de saída.")
         return
@@ -64,6 +66,7 @@ def process_pdf():
     pdfregion = (84, 175, 360, 200)
     names_by_page = extract_text_from_pdf(pdf_path, pdfregion)
     save_pages_to_pdf(pdf_path, names_by_page, output_directory)
+    root.config(cursor="")
     messagebox.showinfo("Concluído", "Processo concluído com sucesso!")
     subprocess.Popen(f'explorer "{os.path.abspath(output_directory)}"', shell=True)
 
